@@ -7,6 +7,11 @@ FieldCellState FieldCell::getState()
     return state;
 };
 
+void FieldCell::setState(FieldCellState fieldCellState)
+{
+    this->state = fieldCellState;
+};
+
 bool FieldCell::attack(unsigned damage = 1)
 {
     if (state == unknown)

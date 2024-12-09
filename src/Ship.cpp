@@ -27,3 +27,23 @@ bool Ship::isDead()
     }
     return true;
 }
+
+void Ship::setPosition(Position position)
+{
+    this->position = position;
+}
+
+Position Ship::getPosition()
+{
+    return position;
+}
+
+void Ship::setDirection(Direction direction)
+{
+    this->direction = direction;
+}
+
+Direction Ship::getDirection()
+{
+    return direction;
+}

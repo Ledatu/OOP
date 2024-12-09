@@ -5,14 +5,7 @@
 #include <ostream>
 #include "exceptions/NotInField.h"
 #include "exceptions/ShipNear.h"
-
-enum Directions
-{
-    East,
-    South,
-    West,
-    North,
-};
+#include "./utils.h"
 
 class Field
 {
@@ -25,6 +18,7 @@ private:
     bool useDoubleDamageFlag;
 
 public:
+    Field();
     Field(unsigned width, unsigned height);
     Field(const Field &other);
     Field(Field &&other) noexcept;
@@ -41,7 +35,7 @@ public:
     unsigned getHeight();
 
     bool addShip(unsigned x, unsigned y, Directions direction, Ship &ship);
-    bool attack(unsigned x, unsigned y, unsigned damage);
+    bool attack(unsigned x, unsigned y, unsigned damage = 1);
 
     void useDoubleDamage();
 };

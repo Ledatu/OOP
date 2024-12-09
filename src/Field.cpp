@@ -1,6 +1,7 @@
 #include "Field.h"
 #include "utils.h"
 
+Field::Field() : width(0), height(0) {}
 Field::Field(unsigned width, unsigned height)
     : width(width), height(height), field(height, std::vector<FieldCell>(width)), useDoubleDamageFlag(false) {}
 
@@ -40,7 +41,7 @@ Field &Field::operator=(Field &&other) noexcept
     return *this;
 }
 
-bool Field::attack(unsigned x, unsigned y, unsigned damage = 1)
+bool Field::attack(unsigned x, unsigned y, unsigned damage)
 {
     if (useDoubleDamageFlag)
     {
@@ -111,6 +112,9 @@ bool Field::addShip(unsigned x, unsigned y, Directions direction, Ship &ship)
             shipIndex++;
         }
     }
+
+    ship.setPosition(Position(x, y));
+    ship.setDirection(direction);
 
     return true;
 }

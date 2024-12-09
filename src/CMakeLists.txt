@@ -44,4 +44,21 @@ add_executable(battleship
     skills/ScanerFactory.cpp
     skills/ShellingFactory.h
     skills/ShellingFactory.cpp
+    players/Player.h
+    players/Bot.h
+    players/Bot.cpp
+    players/User.h
+    players/User.cpp
+    libs/json.hpp
+    game/Game.h
+    game/GameState.h
+    game/GameState.cpp
+    game/BotGame.h
+    game/BotGame.cpp
+    serialization/FileWrapper.h
+    serialization/FileWrapper.cpp
+    serialization/Deserialization.h
+    serialization/Deserialization.cpp
+    serialization/Serialization.h
+    serialization/Serialization.cpp
 )

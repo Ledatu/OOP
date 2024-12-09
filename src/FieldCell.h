@@ -4,7 +4,7 @@
 
 enum FieldCellState
 {
-    unknown,
+    unknown = 0,
     empty,
     hasShip,
 };
@@ -21,6 +21,7 @@ public:
     FieldCell();
 
     FieldCellState getState();
+    void setState(FieldCellState fieldCellState);
 
     bool isShip();
 

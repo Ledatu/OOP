@@ -17,6 +17,14 @@ std::ostream &operator<<(std::ostream &os, SkillManager &skillManager)
     return os;
 }
 
+void SkillManager::clear()
+{
+    while (!queue.empty())
+    {
+        queue.pop();
+    }
+}
+
 SkillManager::SkillManager(std::optional<std::vector<SkillFactory *>> factories)
 {
     this->queue = std::queue<SkillFactory *>();
@@ -28,17 +36,6 @@ SkillManager::SkillManager(std::optional<std::vector<SkillFactory *>> factories)
         this->queue.push(factoriesCopy[index]);
         factoriesCopy.erase(factoriesCopy.begin() + index);
     }
-}
-
-SkillManager::~SkillManager()
-{
-    while (!queue.empty())
-    {
-        auto elem = queue.front();
-        queue.pop();
-        delete elem;
-    }
-    factories.clear();
 }
 
 Skill *SkillManager::getSkill(SkillInfoHolder &skillInfoHolder)
@@ -64,4 +61,31 @@ void SkillManager::addSkillIfNeccessary(bool shipDestroyed)
 void SkillManager::addSkillFactory(SkillFactory *skillFactory)
 {
     factories.push_back(skillFactory);
+}
+
+void SkillManager::push_back(SkillFactory *skillFactory)
+{
+    queue.push(skillFactory);
+}
+
+int SkillManager::size()
+{
+    return queue.size();
+}
+
+SkillFactory &SkillManager::at(int index)
+{
+    std::queue<SkillFactory *> copy = queue;
+    for (int i = 0; i <= index; i++)
+    {
+        if (i == index)
+        {
+            std::cout << queue.size() << " " << copy.size() << "\n";
+            return *(copy.front());
+        }
+        else
+        {
+            copy.pop();
+        }
+    }
 }

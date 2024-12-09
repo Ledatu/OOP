@@ -12,6 +12,7 @@
 #include <ostream>
 #include "../infoHolders/SkillInfoHolder.h"
 #include "../exceptions/NoSkillsAvailable.h"
+#include <string>
 
 class SkillManager
 {
@@ -23,10 +24,12 @@ private:
 
 public:
     SkillManager(std::optional<std::vector<SkillFactory *>> factories = std::nullopt);
-    ~SkillManager();
+    void clear();
+    void push_back(SkillFactory *skillFactory);
 
     void addSkillFactory(SkillFactory *);
     void addSkillIfNeccessary(bool shipDestroyed);
     Skill *getSkill(SkillInfoHolder &skillInfoHolder);
     int size();
+    SkillFactory &at(int index);
 };

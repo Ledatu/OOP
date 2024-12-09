@@ -1,6 +1,7 @@
 #pragma once
 #include "Skill.h"
 #include "../Field.h"
+#include "../utils.h"
 
 class Scaner : public Skill
 {

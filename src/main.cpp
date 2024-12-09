@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <limits>
 #include "Field.h"
 #include "ShipManager.h"
 #include "utils.h"
@@ -8,97 +9,80 @@
 #include "exceptions/ShipNear.h"
 #include "exceptions/NotInField.h"
 #include "infoHolders/SkillInfoHolder.h"
+#include "players/User.h"
+#include "players/Bot.h"
+#include "game/BotGame.h"
 
 int main()
 {
-    auto field = Field(10, 10);
-    std::cout << "\n";
-    std::cout << field;
-    std::cout << "\n";
-
-    std::vector<unsigned> lengths;
-    // for (unsigned i = 1; i <= 4; i++)
-    // {
-    //     for (unsigned j = 1; j <= 4 - i + 1; j++)
-    //     {
-    //         lengths.push_back(i);
-    //         // std::cout << i << " ";
-    //     }
-    // }
-    // std::cout << "\n";
-
-    // auto shipManager = ShipManager(lengths);
-    auto shipManager = ShipManager({3, 4});
-
     try
     {
-        field.addShip(5, 3, West, shipManager.at(0));
-        field.addShip(2, 8, North, shipManager.at(1));
+        Position position;
+        std::cout << "Введите Ширину <пробел> Высоту поля:\n";
+        std::cin >> position;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw std::runtime_error("Введены некорректные данные для размеров поля.");
+        }
+
+        if (position.x() < 1 || position.y() < 1)
+            throw std::runtime_error("Минимальный размер поля: 1x1");
+
+        int numOfShips = 0;
+        std::cout << "Введите количество кораблей:\n";
+        std::cin >> numOfShips;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw std::runtime_error("Введены некорректные данные для количества кораблей.");
+        }
+
+        if (numOfShips < 1)
+            throw std::runtime_error("Минимальное количество кораблей: 1");
+
+        std::vector<unsigned> shipLengths;
+        for (int i = 0; i < numOfShips;)
+        {
+            try
+            {
+                int length = 0;
+                std::cout << "Введите длину для " << i + 1 << "-го корабля\n";
+                std::cin >> length;
+
+                if (std::cin.fail())
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw std::runtime_error("Введены некорректные данные для длины корабля.");
+                }
+
+                if (length < 1)
+                    throw std::runtime_error("Минимальное длина корабля: 1");
+
+                shipLengths.push_back(length);
+                i++;
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+        }
+
+        auto bot = Bot(position.x(), position.y(), shipLengths);
+        auto user = User(position.x(), position.y(), shipLengths);
+
+        auto state = GameState(user, bot);
+        Game *game = new BotGame(user, bot, state);
+        game->start();
     }
-    catch (ShipNear &e)
+    catch (std::exception &e)
     {
         std::cout << e.what() << '\n';
+        std::cout << "Пожалуйста, попробуйте снова, кажется, вы ввели некорректные данные.\n";
     }
-
-    try
-    {
-        field.attack(-100, 100, 1);
-    }
-    catch (NotInField &e)
-    {
-        std::cout << e.what() << '\n';
-    }
-
-    field.attack(3, 3, 1);
-    field.attack(4, 3, 2);
-    field.attack(4, 4, 2);
-
-    std::cout << "\n";
-    std::cout << field;
-    std::cout << "\n";
-
-    Position position(3, 2);
-    auto skillInfoHolder = SkillInfoHolder(&field, &shipManager, &position);
-    auto skillManager = SkillManager(std::vector<SkillFactory *>());
-    std::cout << skillManager << '\n';
-
-    try
-    {
-        std::cout << "Пробуем взять скилл когда их нет.\n";
-        skillManager.getSkill(skillInfoHolder);
-    }
-    catch (NoSkillsAvailable &e)
-    {
-        std::cout << e.what() << '\n';
-    }
-
-    // // Shelling test
-    // skillManager.addSkillFactory(new ShellingFactory);
-    // skillManager.addSkillIfNeccessary(true);
-    // auto skill = skillManager.getSkill(skillInfoHolder);
-    // skillManager.addSkillIfNeccessary(skill->use());
-    // free(skill);
-
-    // // DoubleDamage test
-    // skillManager.addSkillFactory(new DoubleDamageFactory);
-    // skillManager.addSkillIfNeccessary(true);
-    // auto skill = skillManager.getSkill(skillInfoHolder);
-    // skill->use();
-    // free(skill);
-    // std::cout << "\n";
-    // skillManager.addSkillIfNeccessary(field.attack(5, 3, 2));
-    // std::cout << skillManager;
-    // skillManager.addSkillIfNeccessary(field.attack(3, 3, 2));
-    // std::cout << skillManager;
-
-    // // Scaner test
-    // skillManager.addSkillFactory(new ScanerFactory);
-    // skillManager.addSkillIfNeccessary(true);
-    // auto skill = skillManager.getSkill(skillInfoHolder);
-    // std::cout << (skill->use() ? "Обнаружен корабль." : "Кораблей нет.");
-    // free(skill);
-
-    std::cout << "\n";
-    std::cout << field;
-    std::cout << "\n";
 }

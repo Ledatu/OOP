@@ -10,7 +10,9 @@ private:
 
 public:
     ShipManager(std::vector<unsigned> lengths);
+    ShipManager();
 
     unsigned getLength();
     Ship &at(unsigned index);
+    bool allShipsDead();
 };
