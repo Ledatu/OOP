@@ -17,7 +17,7 @@ public:
 	virtual GameState getGameState() = 0;
 	virtual void load(std::string fileName) = 0;
 	virtual void save(std::string fileName) = 0;
-	virtual void start() = 0;
+	virtual void start(std::string filename) = 0;
 };
 
 #endif

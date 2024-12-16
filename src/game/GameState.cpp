@@ -52,7 +52,7 @@ FileWrapper &operator<<(FileWrapper &fileWrapper, GameState &state)
 
 	serialization.stringify(state.getUser().getShipManager(), "playerShipManager");
 	serialization.stringify(state.getUser().getField(), "playerField");
-	serialization.stringify(state.getUser().getSkillManager(), "playerAbilityManager");
+	serialization.stringify(state.getUser().getSkillManager(), "playerSkillManager");
 	serialization.stringify(state.getBot().getShipManager(), "botShipManager");
 	serialization.stringify(state.getBot().getField(), "botField");
 
@@ -83,8 +83,8 @@ void placeShips(ShipManager &shipManager, Field &field)
 		Position position = ship.getPosition();
 		Direction direction = ship.getDirection();
 
-		std::cout << "x " << position.x() << " y " << position.y() << " d " << direction.get() << "\n"
-				  << field << '\n';
+		// std::cout << "x " << position.x() << " y " << position.y() << " d " << direction.get() << "\n"
+		// 		  << field << '\n';
 		field.addShip(position.x(), position.y(), direction.get(), ship);
 	}
 }
@@ -123,16 +123,11 @@ FileWrapper &operator>>(FileWrapper &fileWrapper, GameState &state)
 	Field botField;
 
 	deserialization.parse(shipManager, "playerShipManager");
-	std::cout << "ya tut load shipmanager\n";
 	deserialization.parse(field, "playerField");
-	std::cout << "ya tut load playerField\n";
 
-	deserialization.parse(skillManager, "playerAbilityManager");
-	std::cout << "ya tut load playerAbilityManager\n";
-	std::cout << field.getHeight() << " " << field.getWidth() << '\n';
+	deserialization.parse(skillManager, "playerSkillManager");
 	placeShips(shipManager, field);
 
-	std::cout << field.getWidth() << " " << field.getHeight() << '\n';
 	deserialization.parse(botShipManager, "botShipManager");
 	deserialization.parse(botField, "botField");
 	placeShips(botShipManager, botField);
@@ -160,7 +155,6 @@ GameState &GameState::load(const std::string fileName)
 	FileWrapper fileWrapper(fileName);
 	fileWrapper >> *this;
 	return *this;
-	std::cout << "IM HEAR\n";
 }
 
 void GameState::setBot(Bot &bot)

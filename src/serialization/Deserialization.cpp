@@ -20,7 +20,6 @@ void Deserialization::parse(ShipManager &shipManager, std::string key)
         auto x = jsm.at(key).at("x");
         auto y = jsm.at(key).at("y");
         auto direction = jsm.at(key).at("direction");
-        std::cout << "parsed position for i: " << i << " (" << x << ", " << y << ")\n";
         ship.setPosition(Position(x, y));
         ship.setDirection(Directions(direction));
         int j = 0;
@@ -32,7 +31,6 @@ void Deserialization::parse(ShipManager &shipManager, std::string key)
             j++;
         }
     }
-    std::cout << "ended parse json for shipmanager\n";
 }
 
 void Deserialization::parse(Field &field, std::string key)
@@ -57,7 +55,8 @@ void Deserialization::parse(SkillManager &skillManager, std::string key)
     const auto &jam = j.at(key);
     skillManager = SkillManager();
     skillManager.clear();
-    std::cout << "ya tut";
+    if (jam == nullptr)
+        return;
     for (const auto &jability : jam.at("skills"))
     {
         if (jability == "DoubleDamage")
@@ -73,5 +72,4 @@ void Deserialization::parse(SkillManager &skillManager, std::string key)
             skillManager.push_back(new ShellingFactory());
         }
     }
-    std::cout << "Ended parse json for skillManager";
 }

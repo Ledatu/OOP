@@ -38,13 +38,10 @@ void Serialization::stringify(Field &field, std::string key)
         for (int x = 0; x < field.getWidth(); x++)
         {
             std::string key = "cell_" + std::to_string(x) + "_" + std::to_string(y);
-            JSON[key] = {
-                {"x", x},
-                {"y", y},
-                {"state", field.getCell(x, y).getState()}};
+            JSON[key] = {{"state", field.getCell(x, y).getState()}};
         }
     }
-    std::cout << "ended field\n";
+    std::cout << "Поле записано.\n";
     j[key] = JSON;
 }
 

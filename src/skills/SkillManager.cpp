@@ -80,7 +80,6 @@ SkillFactory &SkillManager::at(int index)
     {
         if (i == index)
         {
-            std::cout << queue.size() << " " << copy.size() << "\n";
             return *(copy.front());
         }
         else

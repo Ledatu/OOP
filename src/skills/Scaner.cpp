@@ -9,6 +9,7 @@ bool Scaner::use()
         {
             int clampedY = clamp(y + i, 0, field->getHeight() - 1);
             int clampedX = clamp(x + j, 0, field->getWidth() - 1);
+            // std::cout << clampedX << " " << clampedY << "\n";
             if (field->getCell(clampedX, clampedY).isShip())
                 return true;
         }

@@ -1,9 +1,7 @@
 #include "BotGame.h"
 
-void BotGame::start()
+void BotGame::start(std::string filename)
 {
-	std::string filename = "/Users/ledatu/documents/oop/save.json";
-	std::cout << "kapec\n";
 	std::cout << this->user.getDamage();
 	while (!this->user.getShipManager().allShipsDead())
 	{
@@ -34,7 +32,7 @@ void BotGame::start()
 				this->load(filename);
 				auto state = this->getGameState();
 				std::cout << state;
-				std::cout << "Игра загружена из сохранения.";
+				std::cout << "Игра загружена из сохранения.\n";
 				continue;
 			}
 		}
@@ -88,43 +86,5 @@ void BotGame::save(std::string filename)
 {
 	auto state = this->getGameState();
 	state.save(filename);
+	std::cout << "Игра сохранена.\n";
 }
-// void BotGame::move(int x, int y, bool isUseAbility)
-// {
-// 	if (isUseAbility)
-// 	{
-// 		state->useSkill();
-// 	}
-// 	auto coords = CoordHolder();
-// 	coords.read();
-// 	auto coord = coords.getCoords();
-// 	state->attack(coord.first, coord.second);
-// 	this->countMoves += 1;
-// 	state = this->stateFactory->getState();
-// }
-
-// Field& BotGame::getPlayerField (){
-// 	return playerField;
-// }
-// Field& BotGame::getEnemyField(){
-// 	return enemyField;
-// }
-
-// ShipManager& BotGame:: getPlayerShipManager()
-// {
-// 	return playerShipManager;
-// }
-
-// ShipManager& BotGame::getEnemyShipManager()
-// {
-// 	return enemyShipManager;
-// }
-
-// GameState& BotGame::getGameState(){
-// 	return *state;
-// }
-
-// SkillManager& BotGame::getSkillManager()
-// {
-// 	return skillManager;
-// }

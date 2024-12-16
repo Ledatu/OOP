@@ -37,6 +37,7 @@ UserInputs User::move(Player &player)
 				{
 					std::cout << "Введите координаты для проверки сканером:\n";
 					std::cin >> position;
+					skillInfoHolder.setPosition(position);
 				}
 
 				if (std::cin.fail())
@@ -160,7 +161,6 @@ void User::placeShips()
 
 			auto &ship = shipManager.at(i);
 			this->field.addShip(position.x(), position.y(), direction.get(), ship);
-			std::cout << this->field.getCell(position.x(), position.y()).getState() << " <- state of current cell\n";
 			std::cout << field << '\n';
 
 			i++;

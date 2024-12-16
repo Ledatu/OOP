@@ -78,7 +78,7 @@ int main()
 
         auto state = GameState(user, bot);
         Game *game = new BotGame(user, bot, state);
-        game->start();
+        game->start("/Users/ledatu/documents/oop/save.json");
     }
     catch (std::exception &e)
     {

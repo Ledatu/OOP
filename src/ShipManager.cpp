@@ -4,7 +4,6 @@ ShipManager::ShipManager(std::vector<unsigned> lengths)
 {
     for (auto &length : lengths)
     {
-        std::cout << "create ship len " << length << '\n';
         ships.push_back(new Ship(length));
     }
 }
